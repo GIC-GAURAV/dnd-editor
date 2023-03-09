@@ -1,0 +1,158 @@
+<div class="container" >
+  <div class="done-container column-container">
+    <div class="drop-area"
+    (drop)="drop($event)" 
+    (dragover)="allowDrop($event)"
+    onclick="event.stopPropagation()" 
+    onclick="event.stopImmediatePropagation()">
+        <!-- <h2>Tech learned</h2> -->
+    <div *ngFor="let complete of completed; let i = index">
+      <div >
+          <section *ngIf="complete.controlType === 'section'" [class]="'grid-'+complete.sectionType">
+            <ng-container *ngFor="let sectionCount of getSectionLength(complete.innerItemCount); let j = index">
+              <app-inner-item [completed]="complete.component[j]" (valueIndex)="getValueIndex($event)" (click)="onSelection($event, j, i)" ></app-inner-item>
+            </ng-container>
+            <button class="delete-btn" (click)="deleteElement($event, i)"><i class="fa fa-trash" style="font-size:24px"></i></button>
+          </section>
+          <!-- <section *ngIf="complete.controlType != 'section'" [class]="'grid-1'">
+            <app-inner-item cdkDropListGroup [completed]="completed" [todos]="todos"></app-inner-item>
+          </section> -->
+      </div>
+    </div>
+    </div>
+    <div class="actions">
+      <button (click)="Submit()">Submit</button>
+      <button>Preview</button>
+    </div>
+  </div>
+
+  <div class="todo-container column-container">
+    <!-- <h2>Tech to learn</h2> -->
+    <div style="display: flex; column-gap: 10px; justify-content: center;">
+    <div class="ng-container" *ngFor="let todo of todos" (dragstart)="dragStart($event, todo)" draggable="true">
+      
+      <kendo-card style="width:auto"  [ngStyle]="{'display': (!todo.display) ? 'none' : ''}">
+        <kendo-card-body class="component">
+          <div class="component-list" >
+            <span class="component-icon">
+              <!-- <svg *ngIf="todo.controlType === 'section' " aria-hidden="true" focusable="false" data-prefix="fal" data-icon="columns-3" class="svg-inline--fa fa-columns-3 fa-3x " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M0 96C0 60.65 28.65 32 64 32H576C611.3 32 640 60.65 640 96V416C640 451.3 611.3 480 576 480H64C28.65 480 0 451.3 0 416V96zM448 448H576C593.7 448 608 433.7 608 416V96C608 78.33 593.7 64 576 64H448V448zM416 64H224V448H416V64zM192 448V64H64C46.33 64 32 78.33 32 96V416C32 433.7 46.33 448 64 448H192z"></path></svg> -->
+              <svg *ngIf="todo.controlType === 'heading' " aria-hidden="true" focusable="false" data-prefix="fal" data-icon="heading" class="svg-inline--fa fa-heading fa-3x" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M448 464c0 8.799-7.199 16-16 16h-128c-8.801 0-16-7.201-16-16c0-8.801 7.199-16 16-16H352V256H96v192h48C152.8 448 160 455.2 160 464C160 472.8 152.8 480 144 480h-128C7.199 480 0 472.8 0 464C0 455.2 7.199 448 16 448H64V64H16C7.199 64 0 56.8 0 48C0 39.2 7.199 32 16 32h128C152.8 32 160 39.2 160 48C160 56.8 152.8 64 144 64H96v160h256V64h-48C295.2 64 288 56.8 288 48C288 39.2 295.2 32 304 32h128C440.8 32 448 39.2 448 48C448 56.8 440.8 64 432 64H384v384h48C440.8 448 448 455.2 448 464z"></path></svg>
+              <svg *ngIf="todo.controlType === 'paragraph' " aria-hidden="true" focusable="false" data-prefix="fal" data-icon="font-case" class="svg-inline--fa fa-font-case fa-3x" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M190.9 41.3c-4.75-12.4-25.12-12.4-29.87 0L1.069 458.2c-3.172 8.268 .9531 17.54 9.187 20.73c8.25 3.163 17.5-.9709 20.69-9.207l45.28-118H275.8l45.28 118C323.5 476.1 329.6 480 336 480c1.906 0 3.859-.3445 5.75-1.065c8.234-3.194 12.36-12.46 9.187-20.73L190.9 41.3zM88.54 319.7l87.47-227.9l87.47 227.9H88.54zM624 159.3c-8.844 0-15.1 7.172-15.1 16.03v28.29c-23.48-26.94-57.59-44.33-95.1-44.33c-70.58 0-127.1 57.53-127.1 128.3l-.002 64.35c0 70.75 57.42 128.1 127.1 128.1c38.41 0 72.52-17.4 96-44.33v28.29C608 472.8 615.2 480 624 480C632.8 480 640 472.8 640 463.1V175.3C640 166.5 632.8 159.3 624 159.3zM608 351.7c0 53.05-43.06 96.21-95.1 96.21c-52.94 0-95.1-43.16-95.1-96.21V287.6c0-53.05 43.06-96.21 95.1-96.21c52.94 0 95.1 43.16 95.1 96.21V351.7z"></path></svg>
+              <svg *ngIf="todo.controlType === 'image' " aria-hidden="true" focusable="false" data-prefix="fal" data-icon="image" class="svg-inline--fa fa-image fa-3x" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M324.9 157.8c-11.38-17.38-39.89-17.31-51.23-.0625L200.5 268.5L184.1 245.9C172.7 229.1 145.9 229.9 134.4 245.9l-64.52 89.16c-6.797 9.406-7.75 21.72-2.547 32C72.53 377.5 83.05 384 94.75 384h322.5c11.41 0 21.8-6.281 27.14-16.38c5.312-10 4.734-22.09-1.516-31.56L324.9 157.8zM95.8 352l62.39-87.38l29.91 41.34C191.2 310.2 196.4 313.2 201.4 312.6c5.25-.125 10.12-2.781 13.02-7.188l83.83-129.9L415 352H95.8zM447.1 32h-384C28.65 32-.0091 60.65-.0091 96v320c0 35.35 28.65 64 63.1 64h384c35.35 0 64-28.65 64-64V96C511.1 60.65 483.3 32 447.1 32zM480 416c0 17.64-14.36 32-32 32H64c-17.64 0-32-14.36-32-32V96c0-17.64 14.36-32 32-32h384c17.64 0 32 14.36 32 32V416zM144 192C170.5 192 192 170.5 192 144S170.5 96 144 96S96 117.5 96 144S117.5 192 144 192zM144 128c8.822 0 15.1 7.178 15.1 16S152.8 160 144 160S128 152.8 128 144S135.2 128 144 128z"></path></svg>
+            </span>
+            <h4 style="margin: 8px 0;">{{todo.name}}</h4>
+          </div>
+        </kendo-card-body>
+      </kendo-card>
+    </div>
+    </div>
+
+    <div
+    
+    >
+
+    <div class="layout-container">
+      <div style="width:100%" *ngFor="let section of sectionList" (dragstart)="dragStart($event, section)" draggable="true">
+        <div class="grid-section layout"  *ngIf="section.sectionType === 1">
+          <div class="section-item">1</div>
+        </div>
+        <div class="grid-section layout" *ngIf="section.sectionType === 2">
+          <div class="section-item">1</div>
+          <div class="section-item">2</div>
+        </div>
+        <div class="grid-section layout" *ngIf="section.sectionType === 3">
+          <div class="section-item">1</div>
+          <div class="section-item">2</div>
+          <div class="section-item">3</div>
+        </div>
+        <div class="grid-section layout" *ngIf="section.sectionType === 4">
+          <div class="section-item">1</div>
+          <div class="section-item">2</div>
+          <div class="section-item">3</div>
+          <div class="section-item">4</div>
+        </div>
+        <div class="grid-section layout" *ngIf="section.sectionType === 5">
+          <div class="section-item">1</div>
+          <div class="section-item">2</div>
+          <div class="section-item">3</div>
+          <div class="section-item">4</div>
+          <div class="section-item">5</div>
+        </div>
+        <div class="grid-section layout-6" *ngIf="section.sectionType === 6">
+          <div class="section-item">1</div>
+          <div class="section-item">2</div>
+        </div>
+        <div class="grid-section layout-7" *ngIf="section.sectionType === 7">
+          <div class="section-item">1</div>
+          <div class="section-item">2</div>
+        </div>
+      </div>
+    </div>
+
+ 
+</div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="detail-container" *ngIf="isStyleWindowShow">
+    <div class="list">
+      <div class="closeStyleWindow" (click)="closeStyleWindow()"><span>X</span></div>
+      <h2>Properties</h2>
+      <kendo-card>
+        <kendo-card-body>
+          <table>
+            <tr>
+              <td><label>Text Color</label></td>
+              <td><input type="color" [(ngModel)]="color"></td>
+            </tr>
+            <tr>
+              <td><label>Background Color</label></td>
+              <td><input type="color" [(ngModel)]="bgcolor"></td>
+            </tr>
+            <tr>
+              <td><label>Padding</label></td>
+              <td><input type="number" [(ngModel)]="padding"></td>
+            </tr>
+              <tr>
+                <td><label>Width</label></td>
+                <td><input type="number" [(ngModel)]="width"></td>
+              </tr>
+              <tr>
+                <tr>
+                  <td><label>Border-radius</label></td>
+                  <td><input type="number" [(ngModel)]="border_radius"></td>
+                </tr>
+                <tr>
+                <td><label>Input Types</label></td>
+                <td><select type="number" [(ngModel)]="inputtype">
+                  <option [value]="type" *ngFor="let type of inputTypes">{{type}}</option>
+                </select></td>
+              </tr>
+              <tr>
+                <div class="upload" *ngIf="elementType==='image'">
+                  <input type="file" #file style="display: none;" (change)="onFileChange($event)">
+                  <button (click)="file.click()">Upload</button>
+                </div>
+              </tr>
+              <tr>
+              <input type="submit" value="Submit" (click)="Apply()">
+            </tr>
+          </table>
+          
+        </kendo-card-body>
+      </kendo-card>
+    </div>
+  </div>
+</div>
+<!-- <app-parent></app-parent> -->
+

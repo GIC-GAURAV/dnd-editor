@@ -1,0 +1,7 @@
+<div class="example-container box" (drop)="lastDropdrop($event)" 
+(dragover)="allowDrop($event)">
+        <app-element-wrapper [values]="complete.values" (valueIndex)="getValueIndex($event)" (click)="onSelection()" (deleteElement)="deleteElement($event)"></app-element-wrapper>
+        <div class="no-content" *ngIf="!complete.values.length">
+          No content here. Drag content from right.
+        </div>
+</div>

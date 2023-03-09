@@ -1,0 +1,9 @@
+
+body{
+  margin: 0;
+}
+body, html, .mat-card, mat-card-title, mat-card-subtitle, .mat-card-subtitle {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: RGBA(46, 49, 49, 1);
+  color: white;
+}

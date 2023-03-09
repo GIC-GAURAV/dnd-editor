@@ -1,0 +1,29 @@
+.box{
+    width: 100%;
+    min-height: 200px;
+    padding: 5px;
+    box-sizing: border-box;
+    position: relative;
+    height: 100%;
+  }
+  .box:hover{
+    border: 1px dotted rgb(7, 245, 253);
+  }
+  .example-box{
+    height: 100%;
+  }
+.no-content{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(222,242,250,0.85);
+  outline: #2faade dashed 1px;
+  outline-offset: -1px;
+  font-size: 15px;
+  color: #2faade;
+  /* padding: 20px; */
+  text-align: center;
+
+}

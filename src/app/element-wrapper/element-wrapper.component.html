@@ -1,0 +1,16 @@
+<div class="element-wrapper" *ngFor="let item2 of values; let i = index">
+  <div contenteditable="true" onfocus="this.focus()" *ngIf="item2.controlType === 'paragraph'" [ngStyle]="item2.styles"
+    (click)="onSelection(item2, i, 'paragraph')">
+    Lorem, ipsum...</div>
+  <div contenteditable="true" onclick='this.focus()' *ngIf="item2.controlType === 'heading'" [ngStyle]="item2.styles"
+    (click)="onSelection(item2, i, 'heading')">Heading</div>
+  <div class="image-element" onclick='this.focus()' *ngIf="item2.controlType === 'image' && !fileSrc" [ngStyle]="item2.styles"
+  (click)="onSelection(item2, i, 'image')">
+      <img *ngIf="!item2.src" class="placeholder-image" src="http://cdn.onlinewebfonts.com/svg/img_148071.png" alt="">
+      <img id="uploaded-img" onclick="event.stopPropagation()" (click)="onSelection(item2, i, 'image')" *ngIf="item2.controlType === 'image' && item2.src"  [src]="item2.src" alt="" srcset="">
+  </div>
+  
+  <div class="action-btns" (click)="delete(i)">
+    <span><i class="fa fa-trash"></i></span>
+  </div>
+</div>

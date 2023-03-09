@@ -1,0 +1,33 @@
+.element-wrapper{
+    width: 100%;
+   
+}
+.item{
+    position: relative;
+    padding: 10px 0;
+}
+.action-btns{
+    position: absolute;
+    right: 0;
+    width: auto;
+    padding: 5px 10px;
+    background-color: white;
+    bottom: -25px;
+    color: black;
+    cursor: pointer;
+    opacity: 2;
+}
+.image-element{
+    width: 100%;
+    min-height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e3f4fb;
+}
+.placeholder-image {
+    width: 100px;
+}
+.image-element #uploaded-img{
+    width: 100%;
+}

@@ -1,0 +1,14 @@
+<div style="margin-left: 100px; display: flex;">
+  <div class="first"
+  (drop)="drop($event)" 
+  (dragover)="allowDrop($event)" >
+  <div *ngFor="let y of data2; let i = index" style="padding: 20px;">
+    {{y}}
+  </div>
+  </div>
+  <div class="second" *ngFor="let x of data">
+    <p (dragstart)="dragStart($event, x)" draggable="true">
+      {{x}}
+    </p>
+  </div>
+</div>

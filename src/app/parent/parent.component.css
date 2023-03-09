@@ -1,0 +1,13 @@
+
+.first{
+    background-color: red;
+    height: 300px;
+    width: 300px;
+}
+.second{
+    background-color: blue;
+    height: 300px;
+    width: 300px;
+}
+
+.row-1 {display: grid; grid-template-columns: repeat(1, 1fr);}.row-2 { display: grid; grid-template-columns: repeat(2, 1fr);}.row-3 { display: grid; grid-template-columns: repeat(3, 1fr);}.row-4 { display: grid; grid-template-columns: repeat(4, 1fr);}.row-5 { display: grid; grid-template-columns: repeat(5, 1fr);}.row-6 { display: grid; grid-template-columns: 1fr 3fr}.row-7 { display: grid; grid-template-columns: 3fr 1fr;}

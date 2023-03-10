@@ -10,6 +10,7 @@ import { LayoutModule, TabStripModule } from '@progress/kendo-angular-layout';
 import { LabelModule } from '@progress/kendo-angular-label';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { DialogsModule, WindowModule } from '@progress/kendo-angular-dialog';
+import { ButtonsModule } from "@progress/kendo-angular-buttons";
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +27,7 @@ import { DialogsModule, WindowModule } from '@progress/kendo-angular-dialog';
     DropDownsModule,
     DialogsModule,
     WindowModule,
+    ButtonsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

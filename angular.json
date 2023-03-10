@@ -27,6 +27,10 @@
               "src/assets"
             ],
             "styles": [
+              {
+                "input": "node_modules/@progress/kendo-theme-default/dist/all.css"
+              },
+              "src/dnd.css",
               "src/styles.css"
             ],
             "scripts": [

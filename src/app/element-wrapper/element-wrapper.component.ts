@@ -33,7 +33,9 @@ export class ElementWrapperComponent implements OnInit {
   }
 
 
-
+  headingContentChange(event:any){
+    console.log(event)
+  }
   
   delete(index:any){
       this._commSrv.selectedIndexs.subscribe((res : any) => {

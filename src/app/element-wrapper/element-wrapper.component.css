@@ -31,3 +31,6 @@
 .image-element #uploaded-img{
     width: 100%;
 }
+.ele{
+    overflow-wrap: anywhere;
+}

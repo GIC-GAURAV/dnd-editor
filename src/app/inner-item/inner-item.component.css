@@ -25,5 +25,7 @@
   color: #2faade;
   /* padding: 20px; */
   text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
 
 }

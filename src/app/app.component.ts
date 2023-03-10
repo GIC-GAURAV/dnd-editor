@@ -1,4 +1,6 @@
-import {Component, DoCheck} from '@angular/core';
+import {Component, DoCheck, ElementRef, Renderer2, ViewChild} from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { PanelBarItemModel } from '@progress/kendo-angular-layout';
 import { CommonService } from './Services/common.service';
 
 @Component({
@@ -13,7 +15,12 @@ export class AppComponent {
   selectedComponentIndex:any
   objIndex : any
   isStyleWindowShow = false
+  @ViewChild('exportHTML') exportHTML! : ElementRef
+  @ViewChild('previewContent') previewHTMLContent! : ElementRef
+  elementType : string = ''
+  public opened = false;
   fileSrc : any
+  previewHTML : any
   todos = [
     {
       name: 'Section',
@@ -30,11 +37,16 @@ export class AppComponent {
       controlType:'heading',
       display : true,
       styles:{
-        color:'black',
-        'background-color':'transparent',
         'font-size':'32px',
         'font-weight' : 'bold',
-        padding: '0px'
+        'color':'black',
+        'background-color':'transparent',
+        'padding': '0px',
+        'font-family' : '',
+        'text-align': 'left',
+        'background-image': '',
+        'margin' : '0px'
+
       }
     },
     {
@@ -42,8 +54,15 @@ export class AppComponent {
       controlType:'paragraph',
       display : true,
       styles:{
-        color:'red',
-        'background-color':'tranparent'
+        'font-size':'',
+        'font-weight' : 'normal',
+        'color':'black',
+        'background-color':'transparent',
+        'padding': '0px',
+        'font-family' : '',
+        'text-align': 'left',
+        'background-image': '',
+        'margin' : '0px',
       }
     },
     {
@@ -52,7 +71,8 @@ export class AppComponent {
       display : true,
       src : '',
       styles:{
-        width:'100%'
+        'width':'100%',
+
       }
     }
   ];
@@ -122,6 +142,9 @@ export class AppComponent {
   color:any
   bgcolor:any
   padding:any
+  margin:any
+  border:any
+  textAlign:any
   width:any
   border_radius:any
   inputTypes = [
@@ -131,12 +154,45 @@ export class AppComponent {
     'number'
   ]
   inputtype:any
+  public fontFamily: Array<string> = [
+    
+  ];
 
-  constructor(private _commSrv : CommonService){
+  constructor(private _commSrv : CommonService, private renderrer : Renderer2, private _sanitizer: DomSanitizer){
 
   }
 
-  elementType : string = ''
+
+  public close(status: string): void {
+    console.log(`Dialog result: ${status}`);
+    this.opened = false;
+  }
+
+  public preview(): void {
+    
+    // this.renderrer.setProperty(this.previewHTMLContent?.nativeElement, 'innerHTML', this.exportHTML.nativeElement)
+    // this.previewHTML = document.getElementById('exportHTML')?.outerHTML;
+    if(this.exportHTML.nativeElement){
+      // console.log(this.exportHTML.nativeElement.innerHTML)
+      console.log(this._sanitizer.bypassSecurityTrustHtml(this.exportHTML.nativeElement.innerHTML))
+      // this.previewHTML = this.exportHTML.nativeElement.innerHTML
+      // this.previewHTMLContent.nativeElement.innerHTML = this.exportHTML.nativeElement.innerHTML
+    }
+    // (document.querySelector('#preview') as HTMLElement)!.innerHTML = this.previewHTML
+    this.opened = true;
+    
+  }
+  public items: Array<PanelBarItemModel> = [
+    <PanelBarItemModel>{
+      title: "First item",
+      content: "First item content",
+      expanded: true,
+    },
+    <PanelBarItemModel>{
+      title: "Second item",
+      children: [<PanelBarItemModel>{ title: "Child item" }],
+    },
+  ];
 
   Apply(){
     // console.log(this.selectedElement)
@@ -148,7 +204,7 @@ export class AppComponent {
     temp!.styles['padding'] = this.padding ? this.padding+'px' : temp!.styles['padding']
     temp!.styles['width'] = this.width ? this.width+'px' : temp!.styles['width']
     temp!.styles['border-radius'] = this.border_radius ? this.border_radius+'%' : temp!.styles['border-radius']
-    this.completed[this.objIndex].component[this.selectedComponentIndex].values[this.selectedValueIndex] = temp
+    this.completed[this.objIndex].component[this.selectedComponentIndex].values[this.selectedValueIndex]!.styles = temp.styles
     console.log(temp)
     console.log(this.completed)
 
@@ -196,8 +252,8 @@ export class AppComponent {
 
   Submit(){
     console.log(this.completed)
-    let htmlcontent = (document.getElementById('htmlWrapper') as HTMLElement).outerHTML.replace(/<!--[\s\S]*?-->/g, '');
-    console.log(htmlcontent)
+    // let htmlcontent = (document.getElementById('htmlWrapper') as HTMLElement).outerHTML.replace(/<!--[\s\S]*?-->/g, '');
+    // console.log(htmlcontent)
   }
 
   onSelection(event:any, compIndex1:any, objIndex:any){
@@ -234,6 +290,11 @@ export class AppComponent {
     event.preventDefault();
     this.completed.splice(i, 1)
   }
+  textAlignment(align:any){
+    let temp:any =  JSON.parse(JSON.stringify(this.completed[this.objIndex].component[this.selectedComponentIndex].values[this.selectedValueIndex]))
+    temp.styles['text-align'] = align;
+    this.completed[this.objIndex].component[this.selectedComponentIndex].values[this.selectedValueIndex]!.styles = temp.styles
+  }
 
   onFileChange(event:any) {
     const reader = new FileReader();
@@ -254,4 +315,6 @@ export class AppComponent {
 
 
   }
+
+ 
 }

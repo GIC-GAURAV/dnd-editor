@@ -5,22 +5,29 @@
   display: flex;
 }
 .done-container{
-  width: 70vw;
+  width: 75vw;
   padding: 20px 0;
   min-height: 100px;
-  height: fit-content;
-  margin-top: 30px;
+  overflow: auto;
+  max-height: 100vh;
   display: flex !important;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 .drop-area{
-  width: 80%;
-  max-width: 80%;
+  width: 90%;
+  max-width: 90%;
+  max-height: 100vh;
+  overflow: auto;
   min-height: 100px;
+  padding: 0 20px;
   height: 100% !important;
+  padding-bottom: 20px;
   background-color: #585858;
+}
+.drop-area::-webkit-scrollbar {
+  display: none;
 }
 .cdk-drop-list{
   min-height: 100px;
@@ -37,10 +44,11 @@
 .todo-container{
   width: 25vw;
   height: 100vh;
+  padding: 20px 0;
 }
 
 .detail-container{
-  /* width: 250px; */
+  width: 25vw;
   position: absolute;
   right: 0;
   z-index: 2;
@@ -77,13 +85,15 @@ h2 {
 
 
 kendo-card {
-  margin: 0.9em;
   cursor: pointer;
+  width: 100% !important;
+  height: 100%;
 }
 
 .list {
   border: RGBA(46, 49, 49, .7) solid 1px;
   border-radius: 2px;
+  height: inherit;
 }
 
 .list-item {
@@ -199,8 +209,8 @@ input{
 }
 .component{
   /* display: inline-block; */
-  width: 95px;
-  height: 115px;
+  width: 85px;
+  height: 100px;
   padding: 5px !important;
   text-align: center;
   display: flex;
@@ -208,6 +218,7 @@ input{
   align-items: center;
   flex-direction: row;
   background: #2e3131;
+  color: white;
 }
 .component .kendo-card-header{
   width: 100%;
@@ -215,7 +226,7 @@ input{
 }
 
 .component-icon svg{
-  width: 40px;
+  width: 30px;
 }
 
 
@@ -266,17 +277,20 @@ section:hover .delete-btn{
 
 .closeStyleWindow{
   position: absolute;
-  top: 20px;
+  top: 32px;
   right: 20px;
   width: 25px;
   height: 25px;
-  background-color: white;
+  background-color: rgb(161, 161, 161);
   color: black;
   border-radius: 50%;
   display: flex;  
   justify-content: center;
   align-items: center;
   cursor: pointer;
+}
+.closeStyleWindow:hover{
+  background-color: rgb(136, 135, 135);
 }
 .upload button{
   padding: 0.25rem 0.5rem;
@@ -285,4 +299,30 @@ section:hover .delete-btn{
     font-size: 16px;
     background-color: rgb(18, 142, 214);
     border-radius: 0.2rem;
+}
+.style-wrapper{
+  width: 100%;
+  height: 100%;
+}
+
+.style-wrapper .style-group-items{
+  display: flex;
+  margin-bottom: 15px;
+}
+.style-group-items .group-item1{
+  width: 40%;
+}
+.style-group-items .group-item2{
+  width: 60%;
+}
+.actions{
+  color: black !important;
+  width: 90%;
+  text-align: end;
+}
+.actions button{
+  margin:0 5px;
+}
+.actions button:last-child{
+  margin-right:0;
 }
